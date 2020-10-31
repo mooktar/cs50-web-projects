@@ -1,0 +1,19 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block body %}
+
+{% if has_entry %}
+<div class="container">
+    {{ content|safe }}
+    <hr class="hr-only">
+    <a href="/wiki/{{ title }}/edit" class="btn btn-outline-secondary">Edit</a>
+</div>
+{% else %}
+<h1>{{ content|safe }}</h1>
+{% endif %}
+
+{% endblock %}

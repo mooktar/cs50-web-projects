@@ -1,0 +1,90 @@
+{% extends "kanban/layout.html" %}
+{% load static %}
+
+
+{% block scripts %}
+<!-- <script src="{% static 'kanban/js/projects.js' %}"></script> -->
+{% endblock %}
+
+
+{% block banner %}
+<div class="bg-light">
+    <div class="container d-flex justify-content-between py-2">
+        <h5 class="text-nowrap banner-title">New project</h5>
+        <a type="button" class="btn btn-primary btn-sm">new project</a>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block body %}
+<div class="container py-3">
+
+    <!-- Projects form -->
+    <div id="projects-form" class="row py-4 d-flex justify-content-center">
+        <div class="col-md-7">
+            <h4>New project</h4>
+            <form class="form mt-4">
+                <div class="input-group mb-3">
+                    <label for="f-project-title" class="col-3 col-form-label">Title</label>
+                    <input type="text" class="form-control" name="f-project-title" id="f-project-title" placeholder="Title">
+                </div>
+                <div class="input-group mb-3">
+                    <label for="f-project-description" class="col-3 col-form-label">Description</label>
+                    <textarea class="form-control" name="f-project-description" id="f-project-description" rows="3" placeholder="Description"></textarea>
+                </div>
+                <div class="input-group mb-3">
+                    <label for="f-project-date" class="col-3 col-form-label">Due date</label>
+                    <input type="date" class="form-control" name="f-project-date" id="f-project-date">
+                </div>
+                <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+            </form>
+        </div>
+    
+        <div class="col-md-5" style="display: non;">
+            <div class="members">
+                <h4>Members</h4>
+                <div id="project-member" class="card card-body">
+                    <!-- member item -->
+                    <div class="member-item member-item- d-flex justify-content-between my-1">
+                        <span>{{request.user}}</span>
+                        <button type="button" class="btn btn-sm btn-primary btn-add-member" data-project="{{project.id}}" data-member="{{request.user}}">add</button>
+                    </div>
+                    <div class="member-item member-item- d-flex justify-content-between my-1">
+                        <span>{{request.user}}</span>
+                        <button type="button" class="btn btn-sm btn-primary btn-add-member" data-project="{{project.id}}" data-member="{{request.user}}">add</button>
+                    </div>
+                    <label class="form-check-label">
+                        <span>User50</span>
+                        <input class="form-check-input" type="checkbox" name="task-check" id="task-check" value="true">
+                    </label>
+                </div>
+            </div>
+            <hr class="hr-only">
+            <div class="tasks">
+                <h4>Tasks</h4>
+                <form action="" class="form mb-2">
+                    <input type="text" name="task-text" id="task-text" class="form-control" placeholder="Task">
+                </form>
+                <div id="project-member" class="car card-bod">
+                    <!-- member item -->
+                    <div class="form-check form-check-inline">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" name="task-check" id="task-check" value="true"> One task
+                        </label>
+                    </div>
+                    <div class="member-item member-item- d-flex justify-content-between my-2">
+                        <button type="button" class="btn btn-sm btn-primary btn-add-member" data-project="{{project.id}}" data-member="{{request.user}}">add</button>
+                        <span>{{request.user}}</span>
+                    </div>
+                    <div class="member-item member-item- d-flex justify-content-between my-2">
+                        <span>{{request.user}}</span>
+                        <button type="button" class="btn btn-sm btn-primary btn-add-member" data-project="{{project.id}}" data-member="{{request.user}}">add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock body %}

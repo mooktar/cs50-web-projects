@@ -1,0 +1,69 @@
+{% extends "kanban/dash.html" %}
+{% load static %}
+
+
+{% block scripts %}
+<script src="{% static 'kanban/js/projects.js' %}"></script>
+{% endblock %}
+
+
+{% block banner-title %}
+<span class="banner-title text-nowrap">Result of <strong>{{query}}</strong></span>
+{% endblock banner-title %}
+
+{% block banner-action %}
+<div class="banner-action text-right">
+    <button id="btn-new-project" type="button" class="btn btn-sm btn-primary">New project</button>
+</div>
+{% endblock banner-action %}
+
+
+{% block body-dash %}
+<div id="results-list" class="row">
+    <!-- projects -->
+    <div id="result-projects" class="col-md-6 mb-3">
+        <h4 class="text-center">Projects</h4>
+        {% for project in projects %}
+            <div class="card card-body project-item mb-3">
+                <a class="h5 project-item-title" href="{% url 'project' project.id %}">{{project.title}}</a>
+                <p class="project-item-description">{{project.description}}</p>
+                <span class="project-item-info text-muted">
+                    <strong class="mr-3">
+                        <img src="{% static 'kanban/icons/person-circle.svg' %}" class="img-fluid">
+                        <small class="project-item-author">{{project.user}}</small>
+                    </strong>
+                    <strong class="mr-3">
+                        <img src="{% static 'kanban/icons/people.svg' %}" class="img-fluid">
+                        <small class="project-item-members">{{project.members.count}}</small>
+                    </strong>
+                    <strong class="mr-3">
+                        <img src="{% static 'kanban/icons/calendar-month.svg' %}" class="img-fluid">
+                        <small class="project-item-date">{{project.due_date}}</small>
+                    </strong>
+                    {% if project.completed %}
+                        <strong class="text-nowrap">
+                            <img src="{% static 'kanban/icons/check2-circle.svg' %}" class="img-fluid">
+                            <small class="project-item-completed text-success">Completed</small>
+                        </strong>
+                    {% endif %}
+                </span>
+            </div>
+        {% empty %}
+            <p class="text-center mt-5 text-muted">No projects find.</p>
+        {% endfor %}
+    </div>
+    
+    <!-- cards -->
+    <div id="result-cards" class="col-md-6">
+        <h4 class="text-center">Cards</h4>
+        {% for card in cards %}
+            <div id="card-item-{{card.id}}" class="card card-body card-item mb-2 py-3 bg-light" data-card="{{card.id}}">
+                <span class="h4 card-item-{{card.id}}-name">{{card.name}}</span>
+                <span class="card-item-{{card.id}}-description">{{card.description}}</span>
+            </div>
+        {% empty %}
+            <p class="text-center mt-5 text-muted">No cards find.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock body-dash %}

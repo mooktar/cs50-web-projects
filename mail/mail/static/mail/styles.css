@@ -1,0 +1,37 @@
+textarea {
+  min-height: 200px;
+}
+
+/* Compose */
+
+#compose-view h3 {
+  display: block;
+}
+
+#compose-success,
+#compose-error {
+  font-size: 16px;
+  margin-left: 100px;
+}
+
+/* For each Email */
+
+.email-item {
+  border: 1px solid #ccc;
+  padding: 0.5em;
+  margin-top: 0.3em;
+  margin-bottom: 0.3em;
+  cursor: pointer;
+}
+
+.email-item span {
+  margin-right: 0.5em;
+}
+
+.email-item span:first-child {
+  font-weight: bold;
+}
+
+.email-item span:last-child {
+  text-align: right !important;
+}

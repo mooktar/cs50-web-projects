@@ -1,0 +1,98 @@
+{% extends "kanban/dash.html" %}
+{% load static %}
+
+
+{% block scripts %}
+<script src="{% static 'kanban/js/project.js' %}"></script>
+{% endblock %}
+
+
+{% block banner-title %}
+<div class="banner-title project-data-title text-nowrap">{{project.title}}</div>
+<div id="project-data" class="card card-body mb-3" style="display: none !important;">
+    <span class="project-data-description">{{project.description}}</span>
+    <span class="project-data-due-date">{{project.due_date}}</span>
+    <span class="project-data-members">{{project.members.all}}</span>
+</div>
+{% endblock banner-title %}
+
+
+{% block banner-action %}
+<div class="banner-action text-right">
+    <span class="dropdown">
+        <a class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img src="{% static 'kanban/icons/three-dots-vertical.svg' %}" class="img-fluid" title="">
+        </a>
+        <div class="dropdown-menu dropdown-menu-right py-0">
+            <a id="btn-edit-project" class="dropdown-item" data-projectid="{{project.id}}">Edit</a>
+            {% if project.user == request.user %}
+                <a id="btn-manage-members" class="dropdown-item" data-projectid="{{project.id}}">Members</a>
+                <a id="btn-complete-project" class="dropdown-item" data-projectid="{{project.id}}">
+                    {% if project.completed %}Incomplete{% else %}Complete{% endif %}
+                </a>
+                <a class="dropdown-item text-danger" href="{% url 'delete project' project.id %}">Delete</a>
+            {% endif %}
+        </div>
+    </span>
+    <button id="btn-new-board" class="btn btn-sm btn-primary">New board</button>
+</div>
+{% endblock banner-action %}
+
+
+{% block body-dash %}
+<!-- Boards list -->
+<div id="boards-list" class="boards-list">
+
+    {% for board in boards %}
+        <!-- Single board -->
+        <div class="col-lg-3 col-md-4 col-sm-6 col-12 board">
+            <div class="card">
+                <div class="card-header">
+                    <span class="board-title board-{{board.id}}-name">{{board.name}}</span>
+                    <span class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="{% static 'kanban/icons/three-dots-vertical.svg' %}" class="img-fluid" title="">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right py-0">
+                            <a class="dropdown-item btn-edit-board" data-board="{{board.id}}" data-name="{{board.name}}">Edit</a>
+                            <a id="form-board-delete" class="dropdown-item text-danger" href="{% url 'delete board' board.id %}">Delete</a>
+                        </div>
+                    </span>
+                </div>
+                <div id="board-body-{{board.id}}" class="card-body bg-light" data-board="{{board.id}}" ondrop="drop(event)" ondragover="allowDrop(event)">
+                    {% for board_card in board_cards %}
+                        {% if board_card.id == board.id %}
+                            {% for card in board_card.cards %}
+                                <div id="card-item-{{card.id}}" class="card card-body card-item my-2" draggable="true" ondragstart="drag(event)" dropzone="false" data-card="{{card.id}}">
+                                    <span class="card-item-{{card.id}}-name">{{card.name}}</span>
+                                    <span class="card-item-{{card.id}}-description" style="display: none">{{card.description}}</span>
+                                    <a class="btn-edit-card" data-board="{{board.id}}" data-card="{{card.id}}">
+                                        <img src="{% static 'kanban/icons/list-check.svg' %}" class="img-fluid">
+                                        <small class="card-item-{{card.id}}-tasks">
+                                            {% for task in tasks %}
+                                                {% ifequal task.card_id card.id %}
+                                                <small class="tasks-{{card.id}}-checked">{{task.checked}}</small>/ <span class="tasks-{{card.id}}-all">{{card.tasks.count}}</span>
+                                                {% endifequal %}
+                                            {% endfor %}
+                                        </small>
+                                    </a>
+                                </div>
+                            {% empty %}
+                            <p class="card-empty text-muted text-center m-0">No cards yet.</p>
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                    <div id="board-{{board.id}}-card-js-render"></div>
+                </div>
+                <div class="card-footer"><a class="btn-new-card" data-board="{{board.id}}">Add new card</a></div>
+            </div>
+        </div>
+    {% empty %}
+        <div id="no-boards" class="text-center py-5">
+            <p class="h3 text-muted text-center">No board yet in this project.</p>
+        </div>
+    {% endfor %}
+
+</div>
+
+{% endblock body-dash %}

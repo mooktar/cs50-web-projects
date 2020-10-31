@@ -1,0 +1,307 @@
+/* MIXINS */
+@font-face {
+  font-family: "Roboto";
+  src: url(../vendor/roboto/Roboto-Light.ttf);
+}
+
+/* GENERAL TAGS */
+a,
+a:hover,
+a:focus {
+  text-decoration: none;
+}
+
+p {
+  line-height: 1.4;
+  padding-bottom: 0;
+  margin-bottom: 0;
+  text-align: justify;
+  word-wrap: normal;
+  word-break: break-all;
+  padding-right: 0.5em;
+}
+
+/* END GENERAL TAGS */
+#wrapper {
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  font-family: "Roboto";
+}
+
+#wrapper .svg {
+  padding: 5px;
+  cursor: pointer;
+}
+
+#wrapper .img-svg {
+  width: 25px;
+  height: 25px;
+  padding: 5px;
+  background-color: #ebebeb;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+#wrapper .img-svg-muted {
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+}
+
+#wrapper .btn,
+#wrapper .form-control {
+  border-radius: 0;
+}
+
+#wrapper .form-control {
+  border-radius: 0;
+}
+
+#wrapper .dropdown-toggle:focus,
+#wrapper .btn:focus,
+#wrapper .form-control:focus {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+#wrapper .dropdown-toggle::after {
+  display: none;
+}
+
+#wrapper .progress {
+  height: 0.2rem !important;
+  margin-top: 1.1em !important;
+  margin-bottom: 1.1em !important;
+}
+
+#wrapper .nav-pills .active {
+  background-color: #343a40;
+}
+
+.navbar {
+  border-bottom: 1px solid #eee;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 99;
+}
+
+.navbar #user-name {
+  text-transform: capitalize;
+  font-weight: bold;
+}
+
+.jumbotron {
+  padding-top: 7em;
+  padding-bottom: 7em;
+  text-align: center;
+}
+
+.jumbotron h1 {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 45px;
+}
+
+.jumbotron p {
+  margin-top: 1em;
+  margin-bottom: 3em;
+  font-size: 20px;
+}
+
+#banner {
+  padding: 0;
+  background-color: #fff;
+}
+
+#banner .container {
+  padding-top: 0.5em;
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-box-pack: justify !important;
+      -ms-flex-pack: justify !important;
+          justify-content: space-between !important;
+}
+
+#banner .img-svg {
+  margin-top: 0.5em;
+}
+
+#main-content {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+
+#boards {
+  padding-top: 1em;
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-box-pack: start !important;
+      -ms-flex-pack: start !important;
+          justify-content: flex-start !important;
+  max-height: calc(100vh - (75px + 64px + 71px));
+}
+
+#boards.row {
+  min-width: 100%;
+  overflow-x: scroll;
+  -ms-flex-wrap: nowrap !important;
+      flex-wrap: nowrap !important;
+  height: 100%;
+}
+
+#boards .board {
+  margin-bottom: 0.7em;
+}
+
+#boards .board .card {
+  border: 0;
+  background-color: #ebebeb;
+}
+
+#boards .board .card .card-name {
+  font-size: 16px;
+}
+
+#boards .board .card .card-header {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-box-pack: justify !important;
+      -ms-flex-pack: justify !important;
+          justify-content: space-between !important;
+}
+
+#boards .board .card .card-header,
+#boards .board .card .card-footer {
+  padding-left: 0.6em;
+  padding-right: 0.6em;
+  border: 0;
+  border-radius: 0;
+  background-color: #ebebeb;
+}
+
+#boards .board .card .card-header a,
+#boards .board .card .card-footer a {
+  font-size: normal;
+  padding-bottom: 0.3em;
+  cursor: pointer;
+}
+
+#boards .board .card .card-body {
+  padding: 0.4em;
+  border-radius: 0;
+}
+
+#boards .board .card input[name="board-name"] {
+  border: 0;
+  background: transparent;
+  padding-left: 0;
+}
+
+#boards .board .card .list-group-item {
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+  border: 1px solid #eee;
+  cursor: pointer;
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-box-pack: justify !important;
+      -ms-flex-pack: justify !important;
+          justify-content: space-between !important;
+}
+
+#boards .board .card input[name="board-task"] {
+  padding-left: 0;
+  padding-right: 0;
+  border: 0;
+  background-color: transparent;
+}
+
+.card {
+  border: 1px solid #eee;
+  border-radius: 0;
+}
+
+.card .list-group {
+  border: 0;
+}
+
+.card .list-group .list-group-item {
+  border: 0;
+}
+
+.card .list-group label {
+  padding-bottom: 5px !important;
+}
+
+.modal .modal-header {
+  color: #f8f9fa;
+}
+
+.modal .nav-item {
+  border: 0;
+  background-color: transparent;
+}
+
+.modal .modal-body .card-header-tabs {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-box-pack: justify !important;
+      -ms-flex-pack: justify !important;
+          justify-content: space-between !important;
+}
+
+.modal .modal-body small.card-info {
+  font-size: smaller;
+  background: none;
+  color: none;
+}
+
+.modal .modal-body small.card-info span {
+  margin-right: 0.5em;
+}
+
+.modal .modal-body form label {
+  width: 25%;
+}
+
+.modal .modal-body .form-check-label {
+  margin-top: 0.5em !important;
+}
+
+.modal .modal-body .form-check-label span.task-completed {
+  text-decoration: line-through;
+}
+
+.modal .modal-body button[type="submit"] {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-box-pack: center !important;
+      -ms-flex-pack: center !important;
+          justify-content: center !important;
+}
+
+#footer {
+  position: relative;
+  bottom: 0;
+  text-align: center;
+}
+
+#footer .container {
+  padding-top: 1em;
+  padding-bottom: 2em;
+  text-align: center !important;
+}
+
+#footer .container img {
+  width: 150px;
+  -webkit-transform-style: flat;
+          transform-style: flat;
+}
+/*# sourceMappingURL=style.css.map */

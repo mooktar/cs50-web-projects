@@ -1,0 +1,284 @@
+$color-border: #eee;
+$color-board: rgb(235, 235, 235);
+$color-light: #f8f9fa;
+$color-dark: #343a40;
+$color-primary: rgb(128, 0, 255);
+$color-pick-1: #3bceac;
+$color-pick-2: #ffd23f;
+$color-pick-3: #ee4266;
+$color-pick-4: #540d6e;
+
+/* MIXINS */
+@mixin flex($position) {
+  display: flex !important;
+  justify-content: $position !important;
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: url(../vendor/roboto/Roboto-Light.ttf);
+}
+
+/* GENERAL TAGS */
+a,
+a:hover,
+a:focus {
+  text-decoration: none;
+}
+
+p {
+  line-height: 1.4;
+  padding-bottom: 0;
+  margin-bottom: 0;
+  text-align: justify;
+  word-wrap: normal;
+  word-break: break-all;
+  padding-right: 0.5em;
+}
+/* END GENERAL TAGS */
+
+#wrapper {
+  background-color: $color-light;
+  min-height: 100vh;
+  font-family: "Roboto";
+
+  .svg {
+    padding: 5px;
+    cursor: pointer;
+  }
+  .img-svg {
+    width: 25px;
+    height: 25px;
+    padding: 5px;
+    background-color: $color-board;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .img-svg-muted {
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+  }
+
+  .btn,
+  .form-control {
+    border-radius: 0;
+  }
+  .form-control {
+    border-radius: 0;
+  }
+  .dropdown-toggle:focus,
+  .btn:focus,
+  .form-control:focus {
+    box-shadow: none;
+  }
+
+  .dropdown-toggle::after {
+    display: none;
+  }
+
+  .progress {
+    height: 0.2rem !important;
+    margin-top: 1.1em !important;
+    margin-bottom: 1.1em !important;
+  }
+
+  .nav-pills .active {
+    background-color: $color-dark;
+  }
+}
+
+.navbar {
+  border-bottom: 1px solid $color-border;
+  position: sticky;
+  top: 0;
+  z-index: 99;
+
+  #user-name {
+    text-transform: capitalize;
+    font-weight: bold;
+  }
+}
+
+.jumbotron {
+  padding-top: 7em;
+  padding-bottom: 7em;
+  text-align: center;
+
+  h1 {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 45px;
+  }
+
+  p {
+    margin-top: 1em;
+    margin-bottom: 3em;
+    font-size: 20px;
+  }
+}
+
+#banner {
+  padding: 0;
+  background-color: #fff;
+
+  .container {
+    padding-top: 0.5em;
+    @include flex(space-between);
+  }
+
+  .img-svg {
+    margin-top: 0.5em;
+  }
+}
+
+#main-content {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+
+#boards {
+  padding-top: 1em;
+  @include flex(flex-start);
+  max-height: calc(100vh - (75px + 64px + 71px));
+
+  &.row {
+    min-width: 100%;
+    overflow-x: scroll;
+    flex-wrap: nowrap !important;
+    height: 100%;
+  }
+
+  .board {
+    margin-bottom: 0.7em;
+
+    .card {
+      border: 0;
+      background-color: $color-board;
+
+      .card-name {
+        font-size: 16px;
+      }
+
+      .card-header {
+        @include flex(space-between);
+      }
+
+      .card-header,
+      .card-footer {
+        padding-left: 0.6em;
+        padding-right: 0.6em;
+        border: 0;
+        border-radius: 0;
+        background-color: $color-board;
+
+        a {
+          font-size: normal;
+          padding-bottom: 0.3em;
+          cursor: pointer;
+        }
+      }
+
+      .card-body {
+        padding: 0.4em;
+        border-radius: 0;
+      }
+
+      input[name="board-name"] {
+        border: 0;
+        background: transparent;
+        padding-left: 0;
+      }
+
+      .list-group-item {
+        margin-top: 0.2em;
+        margin-bottom: 0.2em;
+        border: 1px solid $color-border;
+        cursor: pointer;
+        @include flex(space-between);
+      }
+
+      input[name="board-task"] {
+        padding-left: 0;
+        padding-right: 0;
+        border: 0;
+        // border-bottom: 1px solid $color-border;
+        background-color: transparent;
+      }
+    }
+  }
+}
+
+.card {
+  border: 1px solid $color-border;
+  border-radius: 0;
+
+  .list-group {
+    border: 0;
+    .list-group-item {
+      border: 0;
+    }
+    label {
+      padding-bottom: 5px !important;
+    }
+  }
+}
+
+.modal {
+  .modal-header {
+    color: $color-light;
+  }
+
+  .nav-item {
+    border: 0;
+    background-color: transparent;
+  }
+
+  .modal-body {
+    .card-header-tabs {
+      @include flex(space-between);
+    }
+    small.card-info {
+      font-size: smaller;
+      background: none;
+      color: none;
+      span {
+        margin-right: 0.5em;
+      }
+    }
+
+    form label {
+      width: 25%;
+    }
+
+    .form-check-label {
+      margin-top: 0.5em !important;
+
+      span.task-completed {
+        text-decoration: line-through;
+      }
+    }
+
+    button[type="submit"] {
+      @include flex(center);
+    }
+  }
+}
+
+#footer {
+  position: relative;
+  bottom: 0;
+  text-align: center;
+
+  .container {
+    padding-top: 1em;
+    padding-bottom: 2em;
+    text-align: center !important;
+
+    img {
+      width: 150px;
+      transform-style: flat;
+    }
+  }
+}

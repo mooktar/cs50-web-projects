@@ -1,0 +1,32 @@
+{% extends "network/posts.html" %}
+{% load static %}
+
+
+{% block script %}
+    <script src="{% static 'network/follow.js' %}"></script>
+{% endblock script %}
+
+
+{% block profile %}
+
+    {% if error %}
+        <div id="alert-error" class="alert alert-danger text-center">{{error}}</div>
+    {% else %}
+        <div class="card p-4 mb-3">
+            <div class="d-flex justify-content-between">
+                <strong class="h4 text-capitalize">{{p_user}}</strong>
+                <span class="">
+                    <span class="mx-2">Followers <strong id="profile-followers">{{p_profile.follower.count}}</strong></span>
+                    <span class="">Following <strong id="profile-following">{{p_profile.following.count}}</strong></span>
+                    {% if request.user != p_user %}
+                        <button id="follow-user" class="btn btn-sm btn-primary ml-2" data-id="{{p_user.id}}">
+                            {% if p_user in profile.following.all %}Unfollow{% else %}Follow{% endif %}
+                        </button>
+                    {% endif %}
+                </span>
+
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock profile %}

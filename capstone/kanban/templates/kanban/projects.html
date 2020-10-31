@@ -1,0 +1,57 @@
+{% extends "kanban/dash.html" %}
+{% load static %}
+
+
+{% block scripts %}
+<script src="{% static 'kanban/js/projects.js' %}"></script>
+{% endblock %}
+
+
+{% block banner-title %}
+<span class="banner-title text-nowrap">All projects</span>
+{% endblock banner-title %}
+
+{% block banner-action %}
+<div class="banner-action text-right">
+    <button id="btn-new-project" type="button" class="btn btn-sm btn-primary">New project</button>
+</div>
+{% endblock banner-action %}
+
+
+{% block body-dash %}
+<!-- Projects list -->
+<div id="projects-list" class="row">
+    {% for project in projects %}
+    <!-- Single project -->
+    <div class="col-md-7 my-2 ml-auto mr-auto">
+        <div class="card card-body p-3 project-item">
+            <a class="h5 project-item-title" href="{% url 'project' project.id %}">{{project.title}}</a>
+            <p class="project-item-description">{{project.description}}</p>
+            <span class="project-item-info text-muted">
+                <strong class="mr-3">
+                    <img src="{% static 'kanban/icons/person-circle.svg' %}" class="img-fluid">
+                    <small class="project-item-author">{{project.user}}</small>
+                </strong>
+                <strong class="mr-3">
+                    <img src="{% static 'kanban/icons/people.svg' %}" class="img-fluid">
+                    <small class="project-item-members">{{project.members.count}}</small>
+                </strong>
+                <strong class="mr-3">
+                    <img src="{% static 'kanban/icons/calendar-month.svg' %}" class="img-fluid">
+                    <small class="project-item-date">{{project.due_date}}</small>
+                </strong>
+                {% if project.completed %}
+                    <strong class="">
+                        <img src="{% static 'kanban/icons/check2-circle.svg' %}" class="img-fluid">
+                        <small class="project-item-completed text-success">Completed</small>
+                    </strong>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+    {% empty %}  
+    <!-- Single project -->
+    <p id="no-projects" class="h3 text-center text-muted mb-3">No project there</p>
+    {% endfor %}
+</div>
+{% endblock body-dash %}

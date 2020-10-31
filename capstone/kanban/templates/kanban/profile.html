@@ -1,0 +1,34 @@
+{% extends "kanban/layout.html" %}
+{% load static %}
+
+
+{% block banner %}
+    <div class="jumbotron jumbo-dash">
+        <div class="container py-1 d-flex justify-content-between">
+            <h4 class="vertical-align-bottom"><img src="{% static 'kanban/icons/person-circle.svg' %}" class="img-fluid mr-2"><span class="pt-2">{{profile.username}}</span></h4>
+            <span>
+                <span class="mr-2"><strong>{{projects_count}}</strong> Projects</span>
+                <span><strong>{{tasks_count}}</strong> Tasks</span>
+            </span>
+        </div>
+    </div>
+{% endblock banner %}
+
+
+{% block body %}
+<div class="container">
+    <div id="user-profile" class="row">
+        <!-- Change password -->
+        {% ifequal request.user.username profile.username %}
+        <div class="col-md-5 col-lg-3 text-center mt-5 mr-auto ml-auto">
+            <h4 class="text-center mb-4">Change your password</h4>
+            <form action="{% url 'change password' profile.username %}" class="form mt-3" method="POST">
+                <input type="password" class="form-control" name="current-pwd" id="current-pwd" placeholder="Last password" required>
+                <input type="password" class="form-control my-3" name="new-pwd" id="new-pwd" placeholder="New password" required>
+                <button type="submit" class="btn btn-primary btn-block">Confirm</button>
+            </form>
+        </div>
+        {% endifequal %}
+    </div>
+</div>
+{% endblock body %}

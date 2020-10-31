@@ -1,0 +1,89 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanban50</title>
+    <!-- Link to CSS files -->
+    <link rel="stylesheet" href="{% static 'kanban/vendor/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'kanban/css/index.css' %}">
+</head>
+
+<body class="bg-white">
+
+    <div id="wrapper" class="">
+
+        <!-- Top Navigation -->
+        <nav class="navbar navbar-expand-sm navbar-light">
+            <div class="container">
+
+                <a class="navbar-brand" href="{% url 'index' %}">
+                    <img src="{% static 'kanban/images/kanban50.png' %}" class="img-fluid" alt="Kanban" width="100px">
+                </a>
+                <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#nav-toggle" aria-controls="nav-toggle"
+                    aria-expanded="false" aria-label="nav-label">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="nav-toggle">
+                    {% if user.is_authenticated %}
+                    <form class="form-inline my-2 my-lg-0" action="{% url 'search' %}" method="POST">
+                        <input class="form-control mr-sm-2 rounded-pill" name="query" id="query" type="text" placeholder="Search project, card ...">
+                    </form>
+                    {% endif %}
+                    <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'projects' %}">Projects</a>
+                        </li>
+                        {% endif %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/#about-us">About</a>
+                        </li>
+                        {% if user.is_authenticated %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link active dropdown-toggle btn" id="nav-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="nav-user">{{request.user}}</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="nav-dropdown">
+                                <a class="dropdown-item" href="{% url 'setting' request.user %}">Setting</a>
+                                <a class="dropdown-item text-danger" href="{% url 'logout' %}">Logout</a>
+                            </div>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a type="button" class="btn btn-primary btn-s btn-block rounded-pill" href="{% url 'login' %}">LOGIN</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+            </div>
+        </nav>
+
+        <!-- Banner -->
+        {% block banner %}{% endblock banner %}
+
+        <!-- Main content -->
+        {% block body %}{% endblock body %}
+
+        <!-- Footer -->
+        {% block footer %}{% endblock footer %}
+
+    </div>
+
+    
+    <script>
+    </script>
+    <!-- Link to JS files -->
+    <script src="{% static 'kanban/vendor/jquery.min.js' %}"></script>
+    <script src="{% static 'kanban/vendor/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'kanban/vendor/bootstrap.min.js' %}"></script>
+    <script src="{% static 'kanban/js/index.js' %}"></script>
+    {% block scripts %}{% endblock %}
+
+</body>
+
+</html>

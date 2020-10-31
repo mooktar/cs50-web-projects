@@ -1,0 +1,24 @@
+{% extends "kanban/layout.html" %}
+
+
+{% block body %}
+
+    <div class="container col-lg-4 col-md-6 col-sm-12 py-5">
+
+        <h2 class="text-center">Register</h2>
+        <form class="form py-4" method="POST" action="{% url 'register' %}">
+            {% csrf_token %}
+            <input type="text" name="username" id="username" class="form-control mb-3" placeholder="Username"
+                autocomplete="off">
+            <input type="email" name="email" id="email" class="form-control mb-3" placeholder="Email address"
+                autocomplete="off">
+            <input type="password" name="password" id="password" class="form-control mb-3" placeholder="Password">
+            <input type="password" name="confirmation" id="confirmation" class="form-control mb-3"
+                placeholder="Confirm password">
+            <button type="submit" class="btn btn-primary btn-block">Register</button>
+        </form>
+        <p class="text-center">You have an account, <a href="{% url 'login' %}">Login</a>.</p>
+
+    </div>
+    
+{% endblock body %}

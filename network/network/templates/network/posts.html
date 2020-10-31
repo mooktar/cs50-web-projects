@@ -1,0 +1,90 @@
+{% extends "network/layout.html" %}
+
+{% load static %}
+
+
+{% block body_menu %}
+
+    <div class="card card-body">
+        <div class="text-center p-5">
+            <strong class="h2 text-capitalize">{{ request.user.username }}</strong>
+            <small class="text-center mt-3">{{ request.user.email }}</small>
+        </div>
+    </div>
+    <div class=" mt-4">
+        <div class="card-text text-center p-3">
+            &copy; network by <a href="mailto:mohmouktar@gmail.com">mooktar</a>.
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block body_content %}
+
+
+    <div id="" class="mb-3">{% block profile %}{% endblock profile %}</div>
+
+    <div id="posts-list" class="list-group my-3">
+        <div id="new-post"></div>
+        {% for post in posts %}
+            <div class="list-group-item list-group-item-action flex-column align-items-start p-2 my-1">
+                <small class="mb-2">
+                    <a href="{% url 'profile' post.user.username %}"><strong>{{post.user.username}}</strong></a>
+                    <span class="mx-3">{{post.timestamp}}</span>
+                    {% if not request.user in post.like.all %}
+                    <span data-id="{{post.id}}" data-like="false" class="like-post mr-1">Like</span>
+                    {% else %}
+                    <span data-id="{{post.id}}" data-like="true" class="like-post mr-1">Unlike</span>
+                    {% endif %}
+                    <strong id="post-likes-{{post.id}}">{{post.like.count}}</strong>
+                    {% if request.user.username == post.user.username %}
+                    <a id="edit-post-{{post.id}}" class="edit-post ml-2" data-id="{{post.id}}">Edit</a>
+                    {% endif %}
+                </small>
+                <div id="post-{{post.id}}" class="h5 mb-1">{{post.post}}</div>
+                <div id="edit-section-{{post.id}}" style="display: none">
+                    <form id="editpost-{{post.id}}" class="form-inline">
+                        <div class="input-group w-100">
+                            <textarea class="form-control" name="post-text-{{post.id}}" id="post-text-{{post.id}}" rows="1" resize="off">{{post.post}}</textarea>
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-primary">save</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        {% empty %}
+            <div class="list-group-item flex-column align-items-start p-2 my-1">
+                <h5 class="mb-1 text-center">No posts.</h5>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% comment %} pagination {% endcomment %}
+    <nav aria-label="Page navigation mt-3">
+        <ul class="pagination justify-content-center">
+            {% if posts.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{posts.previous_page_number}}" aria-label="Previous">
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#" aria-label="Previous">
+            {% endif %}
+                    <span aria-hidden="true">&laquo;</span> Previous
+                </a>
+            </li>
+            {% if posts.has_next %}
+            <li class="page-item ml-3">
+                <a class="page-link" href="?page={{posts.next_page_number}}" aria-label="Next">
+            {% else %}
+            <li class="page-item disabled ml-3">
+                <a class="page-link" href="#" aria-label="Next">
+            {% endif %}
+                    Next <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+{% endblock %}

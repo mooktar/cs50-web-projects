@@ -1,0 +1,186 @@
+{% extends "kanban/layout.html" %}
+{% load static %}
+
+
+{% block scripts %}
+{% endblock scripts %}
+
+
+{% block banner %}
+<div class="jumbotron jumbo-dash">
+    <div class="container py-2 d-flex justify-content-between">
+        {% block banner-title %}{% endblock banner-title %}
+        <div class="toaster">
+            {% if alert %}
+            <script> $('#toast-alert').toast('show') </script>
+            <div id="toastalert" class="toast" aria-live="polite" aria-atomic="true" data-delay="5000">
+                <div class="toast-header">
+                    <strong class="mr-auto">Notification</strong>
+                </div>
+                <div class="toast-body toast-alert-body bg-light">
+                {% if message %} {{message}} {% endif %}
+                {% if error %} {{error}} {% endif %}
+                </div>
+            </div>
+            {% endif %}
+            
+            <div id="toast-notification" class="toast" role="alert" aria-live="polite" aria-atomic="true" data-delay="5000">
+                <div class="toast-header">
+                    <strong class="mr-auto">Notification</strong>
+                </div>
+                <div class="toast-body toast-notification-body bg-light"></div>
+            </div>
+        </div>
+        {% block banner-action %}{% endblock banner-action %}
+    </div>
+</div>
+{% endblock banner %}
+
+
+{% block body %}
+<!-- Dashboard -->
+<div id="dashboard">
+    <div class="container">
+        {% block body-dash %}{% endblock body-dash %}
+    </div>
+</div>
+ 
+<!-- Modal Project -->
+<div class="modal fade" id="modal-project" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header bg-light">
+                <h5 class="modal-project-title">Title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <nav class="nav nav-pills nav-justified" role="tablist">
+                    <a href="#pane-project-details" data-toogle="tab" class="nav-link tab-project-details rounded-pill active">Details</a>
+                    {% comment %} {% if project.user == request.user %} {% endcomment %}
+                    <a href="#pane-project-members" data-toogle="tab" class="nav-link tab-project-members rounded-pill">Members</a>
+                    {% comment %} {% endif %} {% endcomment %}
+                </nav>
+                <div class="tab-content">
+                    <div id="pane-project-details" class="tab-pane active">
+                        <form id="form-project" class="form">
+                            <div class="input-group">
+                                <label for="form-project-title" class="col-3 col-form-label">Title</label>
+                                <input type="text" class="form-control" name="form-project-title" id="form-project-title" placeholder="Title" value="{{project.title}}" autocomplete="false" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="form-project-description" class="col-3 col-form-label">Description</label>
+                                <textarea class="form-control" name="form-project-description" id="form-project-description" rows="3" placeholder="Description" autocomplete="false" required>{{project.description}}</textarea>
+                            </div>
+                            <div class="input-group">
+                                <label for="form-project-due-date" class="col-3 col-form-label">Due date</label>
+                                <input type="date" class="form-control" name="form-project-due-date" id="form-project-due-date" value="{{project.due_date}}" required>
+                            </div>
+                            <button id="form-project-submit" type="submit" class="btn btn-primary btn-block" data-project="{{project.id}}">Create</button>
+                        </form>
+                    </div>
+                    <div id="pane-project-members" class="tab-pane">
+                        <div id="project-members" class="car car-body">
+                            {% if project %}
+                                {% for user in users %}
+                                <!-- member item -->
+                                <div class="member-item d-flex justify-content-between p-2 col-md-">
+                                    <span class="">{{user}}</span>
+                                    {% if user not in project.members.all %}
+                                    <button type="button" class="btn btn-sm btn-primary btn-add-member" data-project="{{project.id}}" data-member="{{user.id}}">add</button>
+                                    {% else %}
+                                    <button type="button" class="btn btn-sm btn-danger btn-add-member" data-project="{{project.id}}" data-member="{{user.id}}">remove</button>
+                                    {% endif %}
+                                </div>
+                                {% empty %}
+                                <h5 class="text-muted">No users to add</h5>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+ 
+<!-- Modal Board -->
+<div class="modal fade" id="modal-board" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header bg-light">
+                <h5 class="modal-board-title">Title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <form id="form-board" class="form" data-project="{{project.id}}">
+                    <input type="text" class="form-control" name="form-board-name" id="form-board-name" placeholder="Name" autocomplete="false" required>
+                    <button id="form-board-submit" type="submit" class="btn btn-primary">Create</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+ 
+<!-- Modal Card -->
+<div class="modal fade" id="modal-card" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header bg-light">
+                <h5 class="modal-card-title">Title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <nav class="nav nav-pills nav-justified" role="tablist">
+                    <a href="#pane-card-details" data-toogle="tab" class="nav-link tab-card-details rounded-pill active">Details</a>
+                    <a href="#pane-card-tasks" data-toogle="tab" class="nav-link tab-card-tasks rounded-pill">Tasks</a>
+                </nav>
+                <div class="tab-content">
+                    <div id="pane-card-details" class="tab-pane active">
+                        <form id="form-card" class="form">
+                            <div class="input-group">
+                                <label for="form-card-name" class="col-3 col-form-label">Name</label>
+                                <input type="text" class="form-control" name="form-card-name" id="form-card-name" placeholder="Name" autocomplete="false" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="form-card-description" class="col-3 col-form-label">Description</label>
+                                <textarea class="form-control" name="form-card-description" id="form-card-description" rows="3" placeholder="Description" required></textarea>
+                            </div>
+                            <div class="d-flex justify-content-between mt-2">
+                                <button id="form-card-submit" type="submit" class="btn btn-primary col-3 btn-bloc">Create</button>
+                                <div id="form-card-action" style="display: none;">
+                                    <a id="form-card-delete" class="btn text-danger">
+                                        <img src="{% static 'kanban/icons/trash.svg' %}" class="img-fluid" title="Delete">
+                                        <span>Delete</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="pane-card-tasks" class="tab-pane">
+                        <form id="form-task" class="form">
+                            <input type="text" class="form-control" name="form-task-body" id="form-task-body" placeholder="New task" autocomplete="false" required>
+                        </form>
+                        <div id="modal-tasks" class="px-1">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock body %}

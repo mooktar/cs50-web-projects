@@ -1,0 +1,28 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+Create new entry
+{% endblock %}
+
+{% block body %}
+
+{% if edit %}
+<h1>Editing {{ title }}</h1>
+{% else %}
+<h1>Create new entry</h1>
+{% endif %}
+
+
+{% if exist %}
+<div class="alert" role="alert">
+    <a href="{% url 'encyclopedia:wiki' title %}" class="alert-link">{{ title }}</a> entry already exists.
+</div>
+{% endif %}
+
+<form action="{% url 'encyclopedia:create' %}" method="post" class="form my-4">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit" class="btn btn-outline-secondary">Create</button>
+</form>
+
+{% endblock %}

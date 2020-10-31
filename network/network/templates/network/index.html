@@ -1,0 +1,21 @@
+{% extends "network/posts.html" %}
+{% load static %}
+
+
+{% block script %}
+    <script src="{% static 'network/addpost.js' %}"></script>
+{% endblock script %}
+
+
+{% block profile %}
+
+    <form id="addpost" class="form-inline">
+        <div class="input-group w-100">
+            <textarea class="form-control" name="post-text" id="post-text" rows="1" placeholder="Say something ..." resize="off"></textarea>
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">post</button>
+            </div>
+        </div>
+    </form>
+
+{% endblock profile %}

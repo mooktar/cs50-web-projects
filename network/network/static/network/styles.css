@@ -1,0 +1,30 @@
+a,
+a:hover,
+a:focus {
+  text-decoration: none !important;
+}
+
+.form-control:focus,
+.page-link:focus,
+.btn:focus {
+  border: 1 !important;
+}
+
+.username {
+  text-transform: capitalize;
+}
+
+.fa .fa-heart {
+  fill: red !important;
+}
+
+.like-post,
+.edit-post {
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 767px) {
+  .body-menu {
+    display: none !important;
+  }
+}
